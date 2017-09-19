@@ -1,0 +1,48 @@
+version: "2"
+services:
+    mariadb:
+      image: domezy/rpi-mariadb:10.2
+      container_name: mariadb-server
+      volumes:
+        - ./mysql:/var/lib/mysql
+      #  - ./config/mysql.conf.d:/etc/mysql/mysql.conf.d:ro
+      environment:
+        - MYSQL_ROOT_PASSWORD=comeng
+      ports:
+        - "3306:3306"
+      networks:
+        - app_net_1
+      restart: always
+
+    pma:
+      image: domezy/rpi-phpmyadmin:4.7.4
+      links:
+        - mariadb:db
+      ports:
+        - "8000:80"
+      networks:
+        - app_net_1
+      restart: always
+
+    own:
+      image: domezy/rpi-owncloud:10.0-apache
+      container_name: owncloud-server
+      volumes:
+        - ./apps:/var/www/html/apps
+        - ./config:/var/www/html/config
+        - ./data:/var/www/html/data
+      ports:
+        - "80:80"
+      networks:
+        - app_net_1
+      restart: always
+
+networks:
+   app_net_1:
+     driver: bridge
+     ipam:
+      driver: default
+      config:
+      - subnet: 10.1.0.0/24
+        ip_range: 10.1.0.2/24
+        gateway: 10.1.0.1
