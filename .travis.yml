@@ -15,7 +15,7 @@ install:
 before_script:
   - env | sort
   - cd "$VERSION"
-  - image="owncloud:${VERSION}${VARIANT:+-$VARIANT}"
+  - image="domezy/rpi-owncloud:${VERSION}${VARIANT:+-$VARIANT}"
 
 script:
   - travis_retry docker build -t "$image" "${VARIANT}"
