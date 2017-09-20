@@ -43,6 +43,10 @@ RUN set -ex \
 	&& pecl install redis-3.1.2 \
 	&& docker-php-ext-enable apcu memcached redis
 
+RUN apt-get install -y libsmbclient-dev \
+	&& pecl install smbclient \
+	&& echo "extension=smbclient.so" > /usr/local/etc/php/conf.d/smbclient.ini
+
 ENV OWNCLOUD_VERSION 10.0.2
 VOLUME /var/www/html
 
