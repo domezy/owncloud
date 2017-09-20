@@ -7,7 +7,7 @@ services:
         - ./mysql:/var/lib/mysql
       #  - ./config/mysql.conf.d:/etc/mysql/mysql.conf.d:ro
       environment:
-        - MYSQL_ROOT_PASSWORD=comeng
+        - MYSQL_ROOT_PASSWORD=password
       ports:
         - "3306:3306"
       networks:
