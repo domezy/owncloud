@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		libpq-dev \
 		libxml2-dev \
 		libsmbclient-dev \
+		smbclient \
 	&& rm -rf /var/lib/apt/lists/*
 
 # https://doc.owncloud.org/server/8.1/admin_manual/installation/source_installation.html#prerequisites
@@ -43,7 +44,7 @@ RUN set -ex \
 	&& pecl install memcached-3.0.3 \
 	&& pecl install redis-3.1.2 \
 	&& pecl install smbclient \
-	&& docker-php-ext-enable apcu memcached redis
+	&& docker-php-ext-enable apcu memcached redis smbclient
 
 RUN echo "extension=smbclient.so" > /usr/local/etc/php/conf.d/smbclient.ini
 
